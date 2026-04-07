@@ -1,0 +1,99 @@
+/* Scroll Reveal Animation */
+@keyframes scrollReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.reveal-visible {
+  animation: scrollReveal 0.6s ease-out forwards;
+}
+
+/* Count up animation */
+@keyframes countUp {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.counter {
+  animation: countUp 0.6s ease-out;
+}
+
+/* Service card hover effect */
+.service-card {
+  transition: all 0.25s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Cascading animation for service cards */
+@keyframes serviceCardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.service-card.reveal-visible {
+  animation: serviceCardReveal 0.6s ease-out forwards;
+}
+
+.service-card.reveal-visible:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.service-card.reveal-visible:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.service-card.reveal-visible:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* Floating pill navbar animation */
+@keyframes navbarFloat {
+  from {
+    width: 100%;
+    border-radius: 0;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+    box-shadow: none;
+    background: transparent;
+  }
+  to {
+    width: auto;
+    border-radius: 999px;
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    background: rgba(250, 249, 247, 0.85);
+    backdrop-filter: blur(12px);
+  }
+}
+
+.navbar-floating {
+  animation: navbarFloat 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
