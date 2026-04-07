@@ -230,7 +230,7 @@ function Hero() {
             <Button 
               variant="outline" 
               size="lg" 
-              className="rounded-full px-8 border-white text-white hover:bg-white/10"
+              className="rounded-full px-8 bg-transparent border-white/50 text-white/90 hover:bg-white/10"
               onClick={scrollToServices}
             >
               Ver tratamientos
