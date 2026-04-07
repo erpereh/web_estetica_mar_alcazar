@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import { Menu, X, Phone, MapPin, Clock, Instagram, Star, Sparkles, Heart, Shield, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -35,6 +35,15 @@ function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) return
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    return () => {
+      document.body.style.overflow = originalOverflow
+    }
+  }, [isMobileMenuOpen])
+
   const navLinks = [
     { label: "Nosotras", href: "#nosotras" },
     { label: "Servicios", href: "#servicios" },
@@ -52,28 +61,29 @@ function Navbar() {
   }
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-[400ms] cubic-bezier-out px-6 ${
-        isScrolled ? "navbar-floating" : ""
-      }`}
-      style={{
-        ...(isScrolled && {
-          left: "24px",
-          right: "24px",
-          width: "auto",
-          borderRadius: "999px",
-          marginTop: "16px",
-          marginLeft: "auto",
-          marginRight: "auto",
-          boxShadow: "0 4px 24px rgba(0, 0, 0, 0.08)",
-          background: "rgba(250, 249, 247, 0.85)",
-          backdropFilter: "blur(12px)",
-        })
-      }}
-    >
-      <nav className={`mx-auto px-4 py-4 flex items-center justify-between ${!isScrolled ? "container" : ""}`}>
+    <>
+      <motion.header
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-[400ms] cubic-bezier-out px-6 ${
+          isScrolled ? "navbar-floating" : ""
+        }`}
+        style={{
+          ...(isScrolled && {
+            left: "24px",
+            right: "24px",
+            width: "auto",
+            borderRadius: "999px",
+            marginTop: "16px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            boxShadow: "0 4px 24px rgba(0, 0, 0, 0.08)",
+            background: "rgba(250, 249, 247, 0.85)",
+            backdropFilter: "blur(12px)",
+          })
+        }}
+      >
+        <nav className={`mx-auto px-4 py-4 flex items-center justify-between ${!isScrolled ? "container" : ""}`}>
         <button 
           onClick={() => scrollToSection("#hero")}
           className={`font-serif text-lg sm:text-xl md:text-2xl font-semibold tracking-tight transition-colors max-w-[220px] truncate sm:max-w-none sm:whitespace-normal ${
@@ -123,42 +133,67 @@ function Navbar() {
         )}
 
         {/* Mobile Menu Button */}
-        <button
-          className={`lg:hidden p-2 transition-colors ${isScrolled ? "text-foreground" : "text-white"}`}
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </nav>
+          <button
+            className={`lg:hidden p-2 z-50 transition-colors ${isScrolled ? "text-foreground" : "text-white"}`}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </nav>
+      </motion.header>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          className="lg:hidden bg-background border-t border-border"
-        >
-          <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <button
-                key={link.href}
-                onClick={() => scrollToSection(link.href)}
-                className="text-left py-2 text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {link.label}
-              </button>
-            ))}
-            <Button asChild className="rounded-full mt-2">
-              <a href={BOOKSY_URL} target="_blank" rel="noopener noreferrer">
-                Reservar cita
-              </a>
-            </Button>
-          </div>
-        </motion.div>
-      )}
-    </motion.header>
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.3, ease: EASE_OUT }}
+            className="fixed inset-0 z-[60] lg:hidden bg-[#faf8f5]"
+          >
+            <div className="flex h-full flex-col overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-4">
+                <button
+                  onClick={() => scrollToSection("#hero")}
+                  className="font-serif text-xl font-semibold tracking-tight text-foreground"
+                >
+                  Estética Mar Alcázar
+                </button>
+                <button
+                  className="p-2 text-foreground transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  aria-label="Cerrar menú"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              <div className="flex flex-1 flex-col items-center justify-center gap-8 px-6">
+                {navLinks.map((link) => (
+                  <button
+                    key={link.href}
+                    onClick={() => scrollToSection(link.href)}
+                    className="text-[22px] leading-none text-foreground transition-colors hover:text-foreground/80"
+                  >
+                    {link.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="w-full px-4 pb-4">
+                <Button asChild className="w-full rounded-full bg-foreground text-background hover:bg-foreground/90">
+                  <a href={BOOKSY_URL} target="_blank" rel="noopener noreferrer">
+                    Reservar cita
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   )
 }
 
@@ -869,12 +904,12 @@ function Footer() {
             <p className="text-background/70 mb-6 max-w-md leading-relaxed">
               Tu centro de confianza para depilación láser y tratamientos faciales en Villa de Vallecas.
             </p>
-            <a 
-              href="#" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-background/70 hover:text-background transition-colors"
-            >
+              <a 
+                href="https://www.instagram.com/esteticamaralcazar/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-background/70 hover:text-background transition-colors"
+              >
               <Instagram className="w-5 h-5" />
               <span>Síguenos en Instagram</span>
             </a>
