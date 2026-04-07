@@ -9,10 +9,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import "./styles.css"
 
 const BOOKSY_URL = "https://booksy.com/es-es/44298_estetica-mar-alcazar_depilacion_53009_madrid"
+const EASE_OUT: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_OUT } }
 }
 
 const staggerContainer = {
@@ -191,36 +192,36 @@ function Hero() {
         <motion.div
           className="max-w-2xl"
         >
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
-            className="text-sm uppercase tracking-widest text-white/80 mb-4"
-          >
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3, ease: EASE_OUT }}
+              className="text-sm uppercase tracking-widest text-white/80 mb-4"
+            >
             Villa de Vallecas, Madrid
           </motion.p>
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.5, ease: "easeOut" }}
-            className="font-serif text-5xl md:text-6xl lg:text-7xl font-medium leading-[1.1] text-white mb-6 text-balance"
-          >
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.5, ease: EASE_OUT }}
+              className="font-serif text-5xl md:text-6xl lg:text-7xl font-medium leading-[1.1] text-white mb-6 text-balance"
+            >
             Depilación láser definitiva · Tratamientos faciales
           </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.7, ease: "easeOut" }}
-            className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed"
-          >
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.7, ease: EASE_OUT }}
+              className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed"
+            >
             Resultados reales. Sin dolor. Con el trato que mereces.
           </motion.p>
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.9, ease: "easeOut" }}
-            className="flex flex-wrap gap-4"
-          >
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.9, ease: EASE_OUT }}
+              className="flex flex-wrap gap-4"
+            >
             <Button asChild size="lg" className="rounded-full px-8 bg-white text-foreground hover:bg-white/90">
               <a href={BOOKSY_URL} target="_blank" rel="noopener noreferrer">
                 Reservar cita
@@ -235,12 +236,12 @@ function Hero() {
               Ver tratamientos
             </Button>
           </motion.div>
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.1, ease: "easeOut" }}
-            className="flex items-center gap-6 mt-10 pt-10 border-t border-white/20"
-          >
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 1.1, ease: EASE_OUT }}
+              className="flex items-center gap-6 mt-10 pt-10 border-t border-white/20"
+            >
             <div className="flex items-center gap-2">
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
