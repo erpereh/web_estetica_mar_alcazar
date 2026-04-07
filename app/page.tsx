@@ -76,7 +76,7 @@ function Navbar() {
       <nav className={`mx-auto px-4 py-4 flex items-center justify-between ${!isScrolled ? "container" : ""}`}>
         <button 
           onClick={() => scrollToSection("#hero")}
-          className={`font-serif text-xl md:text-2xl font-semibold tracking-tight transition-colors ${
+          className={`font-serif text-lg sm:text-xl md:text-2xl font-semibold tracking-tight transition-colors max-w-[220px] truncate sm:max-w-none sm:whitespace-normal ${
             isScrolled ? "text-foreground" : "text-white"
           }`}
         >
@@ -364,7 +364,7 @@ function About() {
             
             <motion.div 
               variants={fadeInUp}
-              className="grid grid-cols-3 gap-6"
+              className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6"
             >
               <div className="text-center p-4 rounded-xl bg-secondary/50">
                 <p className="font-serif text-3xl font-medium text-foreground counter">{stats.rating.toFixed(1)}</p>
@@ -515,15 +515,17 @@ function Services() {
             <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-12 h-12 rounded-full p-1 bg-secondary">
               <TabsTrigger 
                 value="laser" 
-                className="rounded-full data-[state=active]:bg-card data-[state=active]:shadow-sm"
+                className="rounded-full px-2 sm:px-4 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm"
               >
-                Depilación Láser
+                <span className="sm:hidden">Láser</span>
+                <span className="hidden sm:inline">Depilación Láser</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="facial" 
-                className="rounded-full data-[state=active]:bg-card data-[state=active]:shadow-sm"
+                className="rounded-full px-2 sm:px-4 text-xs sm:text-sm data-[state=active]:bg-card data-[state=active]:shadow-sm"
               >
-                Tratamientos Faciales
+                <span className="sm:hidden">Faciales</span>
+                <span className="hidden sm:inline">Tratamientos Faciales</span>
               </TabsTrigger>
             </TabsList>
             
@@ -714,6 +716,7 @@ function Testimonials() {
   }, [])
 
   const maxIndex = Math.max(0, testimonials.length - itemsPerView)
+  const translateStep = itemsPerView === 1 ? 100 : 100 / itemsPerView + 1.5
 
   const next = () => setCurrentIndex(prev => Math.min(prev + 1, maxIndex))
   const prev = () => setCurrentIndex(prev => Math.max(prev - 1, 0))
@@ -787,14 +790,14 @@ function Testimonials() {
           className="overflow-hidden"
         >
           <div 
-            className="flex gap-6 transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${currentIndex * (100 / itemsPerView + 1.5)}%)` }}
+            className="flex gap-0 md:gap-6 transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${currentIndex * translateStep}%)` }}
           >
             {testimonials.map((testimonial, index) => (
               <Card 
                 key={index}
                 className="flex-shrink-0 border-0 shadow-sm"
-                style={{ width: `calc(${100 / itemsPerView}% - 1rem)` }}
+                style={{ width: itemsPerView === 1 ? "100%" : `calc(${100 / itemsPerView}% - 1rem)` }}
               >
                 <CardContent className="p-6 md:p-8">
                   <div className="flex mb-4">
@@ -842,7 +845,7 @@ function CTA() {
             Reserva tu cita en segundos. Sin esperas, sin complicaciones.
           </motion.p>
           <motion.div variants={fadeInUp}>
-            <Button asChild size="lg" className="rounded-full px-10 bg-foreground text-background hover:bg-foreground/90">
+            <Button asChild size="lg" className="rounded-full px-6 sm:px-10 bg-foreground text-background hover:bg-foreground/90">
               <a href={BOOKSY_URL} target="_blank" rel="noopener noreferrer">
                 Reservar ahora en Booksy
               </a>
@@ -857,7 +860,7 @@ function CTA() {
 // Contact & Footer
 function Footer() {
   return (
-    <footer id="contacto" className="py-16 md:py-24 bg-foreground text-background reveal">
+    <footer id="contacto" className="py-16 md:py-24 bg-foreground text-background">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
